@@ -9,10 +9,10 @@
 - Schematic grid should be as large as possible with 2.54 mm spacing preferred but 1.27 mm or smaller if required
 - Schematic should have symbols centered in the drawing not overlapping with data box in lower righthand corner or drawing boundaries
 - Schematic should have in general a left to right flow such that inputs are on the left and outputs are on the right to the extent possible
-- All components in the BOM must be present in the schematic as a symbol or a note
+- All components in the BOM must be present in the schematic as a symbol
 - All power nets must have PWR_FLAG symbol except those directly connected to power output pins
 - All pins on symbols must either be connected to an appropriate net or a no-connect symbol
-- [x] Fix schematic load errors
+- Fix schematic load errors
 
 ## PCB layout
 - KiCAD PCB Layout must be strictly KiCAD version 9 compliant (grammar and syntax)
@@ -28,14 +28,6 @@
 - Fix PCB layout load errors
 
 ## Other
-- [x] Download component datasheets to ./Datasheets directory
-- [x] Clarify target PC environment is Debian Linux 13 amd64 not Debian Linux 9 amd64 (typo)
-- [x] Add to BOM "DTECH USB to Serial Adapter 10 ft USB to RS232 DB9 Female Cable COM Port with FTDI Chipset Supports Windows 11 10 8 7 Mac Linux"
+- Add column to BOM with symbol library (Package) / Symbol for each component
 - Verify the KiCAD symbols match the datasheets
 - Verify the KiCAD footprints match the datasheets
-- [x] Add column to BOM with link to datasheet for component
-- [x] Add columns to BOM with Mouser and Newark part numbers
-- Add column to BOM with symbol used for each component
-- Add column to BOM with symbol library for each component
-- Add column to BOM with footprint used for each component
-- Add column to BOM with footprint library for each component
