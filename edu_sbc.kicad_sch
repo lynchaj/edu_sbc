@@ -1,0 +1,191 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "9.0")
+	(uuid "00000000-0000-0000-0000-000065000001")
+	(paper "A3")
+	(title_block
+		(title "Educational Z80 Single Board Computer (EduSBC)")
+		(date "2026-11-19")
+		(rev "1.0")
+		(company "Educational Architecture Series")
+		(comment 1 "Vocational & Engineering Microarchitecture System")
+		(comment 2 "Top-Level System Hierarchy")
+	)
+	(sheet
+		(at 38.1 44.45)
+		(size 76.2 38.1)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "00000000-0000-0000-0000-000065000010")
+		(property "Sheetname" "Power & Clocks"
+			(at 38.1 43.688 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+					(bold yes)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "01_Power_Clock.kicad_sch"
+			(at 38.1 83.312 0)
+			(effects
+				(font
+					(size 1.2 1.2)
+					(italic yes)
+				)
+				(justify left top)
+			)
+		)
+	)
+	(sheet
+		(at 139.7 44.45)
+		(size 76.2 38.1)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "00000000-0000-0000-0000-000065000020")
+		(property "Sheetname" "CPU Core & Bus"
+			(at 139.7 43.688 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+					(bold yes)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "02_CPU_Bus.kicad_sch"
+			(at 139.7 83.312 0)
+			(effects
+				(font
+					(size 1.2 1.2)
+					(italic yes)
+				)
+				(justify left top)
+			)
+		)
+	)
+	(sheet
+		(at 241.3 44.45)
+		(size 76.2 38.1)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "00000000-0000-0000-0000-000065000030")
+		(property "Sheetname" "Memory & Address Decoding"
+			(at 241.3 43.688 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+					(bold yes)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "03_Memory_Decode.kicad_sch"
+			(at 241.3 83.312 0)
+			(effects
+				(font
+					(size 1.2 1.2)
+					(italic yes)
+				)
+				(justify left top)
+			)
+		)
+	)
+	(sheet
+		(at 88.9 101.6)
+		(size 76.2 38.1)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "00000000-0000-0000-0000-000065000040")
+		(property "Sheetname" "Parallel GPIO Subsystem"
+			(at 88.9 100.838 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+					(bold yes)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "04_Parallel_IO.kicad_sch"
+			(at 88.9 140.462 0)
+			(effects
+				(font
+					(size 1.2 1.2)
+					(italic yes)
+				)
+				(justify left top)
+			)
+		)
+	)
+	(sheet
+		(at 190.5 101.6)
+		(size 76.2 38.1)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "00000000-0000-0000-0000-000065000050")
+		(property "Sheetname" "Serial Communications (UART & RS232)"
+			(at 190.5 100.838 0)
+			(effects
+				(font
+					(size 1.5 1.5)
+					(bold yes)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "05_Serial_UART.kicad_sch"
+			(at 190.5 140.462 0)
+			(effects
+				(font
+					(size 1.2 1.2)
+					(italic yes)
+				)
+				(justify left top)
+			)
+		)
+	)
+	(text "EDUCATIONAL SINGLE BOARD COMPUTER - ARCHITECTURE MAP\n\nAll subsystem sheets communicate via explicit Global Labels:\n- Address Bus: A[15..0]\n- Data Bus: D[7..0]\n- CPU Control: nRD, nWR, nMREQ, nIORQ, nM1, nWAIT, nINT\n- System Status: nRESET, RESET_HIGH, CPU_CLK (4.0MHz), UART_CLK (1.8432MHz)\n- Power Rails: +5V, +9V_RAW, GND"
+		(at 38.1 165.1 0)
+		(effects
+			(font
+				(size 1.8 1.8)
+				(bold yes)
+			)
+			(justify left top)
+		)
+		(uuid "00000000-0000-0000-0000-000065000099")
+	)
+)

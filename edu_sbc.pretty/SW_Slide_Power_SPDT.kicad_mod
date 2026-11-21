@@ -1,0 +1,103 @@
+(footprint "SW_Slide_Power_SPDT"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "Power Slide Switch SPDT, 4.70mm pitch, rated 1A-4A @ 28VDC (e.g. C&K V802 series, NKK SS-12, or E-Switch)")
+	(tags "switch slide spdt power 1A 2A 3A 4A")
+	(property "Reference" "SW1"
+		(at 0 -4.5 0)
+		(layer "F.SilkS")
+		(effects
+			(font
+				(size 1.0 1.0)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "SW_Slide_Power_SPDT"
+		(at 0 4.5 0)
+		(layer "F.SilkS")
+		(effects
+			(font
+				(size 1.0 1.0)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" "edu_sbc:SW_Slide_Power_SPDT"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(effects
+			(font
+				(size 1.0 1.0)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_line
+		(start -6.5 -2.8)
+		(end 6.5 -2.8)
+		(stroke (width 0.15) (type solid))
+		(layer "F.SilkS")
+	)
+	(fp_line
+		(start 6.5 -2.8)
+		(end 6.5 2.8)
+		(stroke (width 0.15) (type solid))
+		(layer "F.SilkS")
+	)
+	(fp_line
+		(start 6.5 2.8)
+		(end -6.5 2.8)
+		(stroke (width 0.15) (type solid))
+		(layer "F.SilkS")
+	)
+	(fp_line
+		(start -6.5 2.8)
+		(end -6.5 -2.8)
+		(stroke (width 0.15) (type solid))
+		(layer "F.SilkS")
+	)
+	(fp_text user "ON"
+		(at -4.7 3.5 0)
+		(layer "F.SilkS")
+		(effects
+			(font
+				(size 1.0 1.0)
+				(thickness 0.15)
+				(bold yes)
+			)
+		)
+	)
+	(fp_text user "OFF"
+		(at 4.7 3.5 0)
+		(layer "F.SilkS")
+		(effects
+			(font
+				(size 1.0 1.0)
+				(thickness 0.15)
+				(bold yes)
+			)
+		)
+	)
+	(pad "1" thru_hole rect
+		(at -4.70 0 0)
+		(size 2.40 2.40)
+		(drill 1.30)
+		(layers "*.Cu" "*.Mask")
+	)
+	(pad "2" thru_hole round
+		(at 0.00 0 0)
+		(size 2.40 2.40)
+		(drill 1.30)
+		(layers "*.Cu" "*.Mask")
+	)
+	(pad "3" thru_hole round
+		(at 4.70 0 0)
+		(size 2.40 2.40)
+		(drill 1.30)
+		(layers "*.Cu" "*.Mask")
+	)
+)
