@@ -1,5 +1,6 @@
 ### edu_sbc To Do List
 - Update DESIGN_DECISIONS with any changes from TO_DO list actions
+- Project GitHub Repository is: https://github.com/lynchaj/edu_sbc
 
 ## Schematic
 - KiCAD schematic must be strictly KiCAD version 9 compliant (grammar and syntax)
