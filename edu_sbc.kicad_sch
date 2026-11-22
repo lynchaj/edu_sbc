@@ -5,187 +5,316 @@
 	(uuid "00000000-0000-0000-0000-000065000001")
 	(paper "A3")
 	(title_block
-		(title "Educational Z80 Single Board Computer (EduSBC)")
-		(date "2026-11-19")
-		(rev "1.0")
+		(title "Educational Z80 Single Board Computer (EduSBC) — Top Level")
+		(date "2026-11-22")
+		(rev "1.1")
 		(company "Educational Architecture Series")
-		(comment 1 "Vocational & Engineering Microarchitecture System")
-		(comment 2 "Top-Level System Hierarchy")
+		(comment 1 "Complete Hierarchical Design (Root + 6 Subsystem Sheets) — KiCad 9")
+	)
+	(lib_symbols
+		(symbol "Mechanical:MountingHole_Pad"
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "H"
+				(at 0 2.54 0)
+				(effects (font (size 1.27 1.27)))
+			)
+			(property "Value" "MountingHole_3.2mm_M3"
+				(at 0 -2.54 0)
+				(effects (font (size 1.27 1.27)))
+			)
+			(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_Pad_Via"
+				(at 0 0 0)
+				(effects (font (size 1.27 1.27)) (hide yes))
+			)
+			(property "Datasheet" "~"
+				(at 0 0 0)
+				(effects (font (size 1.27 1.27)) (hide yes))
+			)
+			(symbol "MountingHole_Pad_0_1"
+				(rectangle
+					(start -2.54 1.27)
+					(end 2.54 -1.27)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole_Pad")
+		(at 63.5 243.84 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "7ac64b34-eec8-42d1-8974-6fc1b41c3ff1")
+		(property "Reference" "H1"
+			(at 63.5 241.3 0)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Value" "M3 Mounting Hole"
+			(at 63.5 246.38 0)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_Pad_Via"
+			(at 63.5 243.84 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" "~"
+			(at 63.5 243.84 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+
+		(instances
+			(project "edu_sbc"
+				(path "/00000000-0000-0000-0000-000065000001"
+					(reference "H1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole_Pad")
+		(at 88.9 243.84 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d6297552-b4a4-486e-8b74-bfb128c63513")
+		(property "Reference" "H2"
+			(at 88.9 241.3 0)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Value" "M3 Mounting Hole"
+			(at 88.9 246.38 0)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_Pad_Via"
+			(at 88.9 243.84 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" "~"
+			(at 88.9 243.84 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+
+		(instances
+			(project "edu_sbc"
+				(path "/00000000-0000-0000-0000-000065000001"
+					(reference "H2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole_Pad")
+		(at 114.3 243.84 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "98052337-1bed-42ac-a1df-a49ca29e5856")
+		(property "Reference" "H3"
+			(at 114.3 241.3 0)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Value" "M3 Mounting Hole"
+			(at 114.3 246.38 0)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_Pad_Via"
+			(at 114.3 243.84 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" "~"
+			(at 114.3 243.84 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+
+		(instances
+			(project "edu_sbc"
+				(path "/00000000-0000-0000-0000-000065000001"
+					(reference "H3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Mechanical:MountingHole_Pad")
+		(at 139.7 243.84 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f4b8d476-04a0-467a-9add-f8765258534a")
+		(property "Reference" "H4"
+			(at 139.7 241.3 0)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Value" "M3 Mounting Hole"
+			(at 139.7 246.38 0)
+			(effects (font (size 1.27 1.27)))
+		)
+		(property "Footprint" "MountingHole:MountingHole_3.2mm_M3_Pad_Via"
+			(at 139.7 243.84 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+		(property "Datasheet" "~"
+			(at 139.7 243.84 0)
+			(effects (font (size 1.27 1.27)) (hide yes))
+		)
+
+		(instances
+			(project "edu_sbc"
+				(path "/00000000-0000-0000-0000-000065000001"
+					(reference "H4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(text "EDUCATIONAL Z80 SINGLE BOARD COMPUTER (EduSBC) — HIERARCHICAL TOP SHEET\nExternal Accessories (Excluded from PCB BOM Symbols): Qualtek QAWA-24-12-US01, DTECH DT-9008, DTECH DT-5002A"
+		(at 63.5 30.48 0)
+		(effects (font (size 1.5 1.5) (bold yes)) (justify left top))
+		(uuid "4246b2e1-b480-44aa-8167-6cb40c1db986")
 	)
 	(sheet
-		(at 38.1 44.45)
-		(size 76.2 38.1)
+		(at 76.2 55.88)
+		(size 76.2 45.72)
 		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "00000000-0000-0000-0000-000065000010")
-		(property "Sheetname" "Power & Clocks"
-			(at 38.1 43.688 0)
-			(effects
-				(font
-					(size 1.5 1.5)
-					(bold yes)
-				)
-				(justify left bottom)
-			)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "00000000-0000-0000-0000-000065010000")
+		(property "Sheetname" "01_Power_Clock"
+			(at 76.2 54.61 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
 		(property "Sheetfile" "01_Power_Clock.kicad_sch"
-			(at 38.1 83.312 0)
-			(effects
-				(font
-					(size 1.2 1.2)
-					(italic yes)
-				)
-				(justify left top)
-			)
+			(at 76.2 102.88 0)
+			(effects (font (size 1.27 1.27)) (justify left top))
 		)
 	)
 	(sheet
-		(at 139.7 44.45)
-		(size 76.2 38.1)
+		(at 190.5 55.88)
+		(size 76.2 45.72)
 		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "00000000-0000-0000-0000-000065020000")
+		(property "Sheetname" "02_CPU_Z80"
+			(at 190.5 54.61 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "00000000-0000-0000-0000-000065000020")
-		(property "Sheetname" "CPU Core & Bus"
-			(at 139.7 43.688 0)
-			(effects
-				(font
-					(size 1.5 1.5)
-					(bold yes)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "02_CPU_Bus.kicad_sch"
-			(at 139.7 83.312 0)
-			(effects
-				(font
-					(size 1.2 1.2)
-					(italic yes)
-				)
-				(justify left top)
-			)
+		(property "Sheetfile" "02_CPU_Z80.kicad_sch"
+			(at 190.5 102.88 0)
+			(effects (font (size 1.27 1.27)) (justify left top))
 		)
 	)
 	(sheet
-		(at 241.3 44.45)
-		(size 76.2 38.1)
+		(at 304.8 55.88)
+		(size 76.2 45.72)
 		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "00000000-0000-0000-0000-000065030000")
+		(property "Sheetname" "03_Address_Decode"
+			(at 304.8 54.61 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "00000000-0000-0000-0000-000065000030")
-		(property "Sheetname" "Memory & Address Decoding"
-			(at 241.3 43.688 0)
-			(effects
-				(font
-					(size 1.5 1.5)
-					(bold yes)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "03_Memory_Decode.kicad_sch"
-			(at 241.3 83.312 0)
-			(effects
-				(font
-					(size 1.2 1.2)
-					(italic yes)
-				)
-				(justify left top)
-			)
+		(property "Sheetfile" "03_Address_Decode.kicad_sch"
+			(at 304.8 102.88 0)
+			(effects (font (size 1.27 1.27)) (justify left top))
 		)
 	)
 	(sheet
-		(at 88.9 101.6)
-		(size 76.2 38.1)
+		(at 88.9 121.92)
+		(size 76.2 45.72)
 		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "00000000-0000-0000-0000-000065040000")
+		(property "Sheetname" "04_Memory"
+			(at 88.9 120.65 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "00000000-0000-0000-0000-000065000040")
-		(property "Sheetname" "Parallel GPIO Subsystem"
-			(at 88.9 100.838 0)
-			(effects
-				(font
-					(size 1.5 1.5)
-					(bold yes)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "04_Parallel_IO.kicad_sch"
-			(at 88.9 140.462 0)
-			(effects
-				(font
-					(size 1.2 1.2)
-					(italic yes)
-				)
-				(justify left top)
-			)
+		(property "Sheetfile" "04_Memory.kicad_sch"
+			(at 88.9 161.29 0)
+			(effects (font (size 1.27 1.27)) (justify left top))
 		)
 	)
 	(sheet
-		(at 190.5 101.6)
-		(size 76.2 38.1)
+		(at 241.3 121.92)
+		(size 76.2 45.72)
 		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0.0000)
-		)
-		(uuid "00000000-0000-0000-0000-000065000050")
-		(property "Sheetname" "Serial Communications (UART & RS232)"
-			(at 190.5 100.838 0)
-			(effects
-				(font
-					(size 1.5 1.5)
-					(bold yes)
-				)
-				(justify left bottom)
-			)
+		(stroke (width 0.1524) (type solid))
+		(fill (color 0 0 0 0.0000))
+		(uuid "00000000-0000-0000-0000-000065050000")
+		(property "Sheetname" "05_Serial_UART"
+			(at 241.3 120.65 0)
+			(effects (font (size 1.27 1.27)) (justify left bottom))
 		)
 		(property "Sheetfile" "05_Serial_UART.kicad_sch"
-			(at 190.5 140.462 0)
+			(at 241.3 161.29 0)
+			(effects (font (size 1.27 1.27)) (justify left top))
+		)
+	)
+	(sheet
+		(at 190.5 182.88)
+		(size 76.2 38.1)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "00000000-0000-0000-0000-000065060000")
+		(property "Sheetname" "06_Parallel_IO"
+			(at 190.5 181.61 0)
 			(effects
 				(font
-					(size 1.2 1.2)
-					(italic yes)
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "06_Parallel_IO.kicad_sch"
+			(at 190.5 222.25 0)
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 				(justify left top)
 			)
 		)
 	)
-	(text "EDUCATIONAL SINGLE BOARD COMPUTER - ARCHITECTURE MAP\n\nAll subsystem sheets communicate via explicit Global Labels:\n- Address Bus: A[15..0]\n- Data Bus: D[7..0]\n- CPU Control: nRD, nWR, nMREQ, nIORQ, nM1, nWAIT, nINT\n- System Status: nRESET, RESET_HIGH, CPU_CLK (4.0MHz), UART_CLK (1.8432MHz)\n- Power Rails: +5V, +9V_RAW, GND"
-		(at 38.1 165.1 0)
-		(effects
-			(font
-				(size 1.8 1.8)
-				(bold yes)
-			)
-			(justify left top)
+	(sheet_instances
+		(path "/00000000-0000-0000-0000-000065000001"
+			(page "1")
 		)
-		(uuid "00000000-0000-0000-0000-000065000099")
+		(path "/00000000-0000-0000-0000-000065000001/00000000-0000-0000-0000-000065060000"
+			(page "7")
+		)
 	)
+	(embedded_fonts no)
 )

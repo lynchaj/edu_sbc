@@ -1,15 +1,15 @@
 # Educational Single Board Computer (EduSBC) — Project Decisions & Specifications Record
 
-> **Status:** Schematics & PCB Layout Initialized (KiCad 9 PCB Created)  
-> **Last Updated:** 2026-11-19  
-> **Target CAD Tool:** KiCad 9 on Debian Linux 13 (amd64)  
-> **Project File:** `/home/lynchaj/Documents/edu_sbc/edu_sbc.kicad_pro`  
-> **Root Schematic:** `/home/lynchaj/Documents/edu_sbc/edu_sbc.kicad_sch`  
-> **PCB Layout:** `/home/lynchaj/Documents/edu_sbc/edu_sbc.kicad_pcb`  
-> **Bill of Materials:** `/home/lynchaj/Documents/edu_sbc/BOM.md` (and `BOM.csv`)  
-> **Autorouter:** FreeRouting 2.5.0 (Specctra DSN / SES workflow)  
-> **PCB Fabricator:** JLCPCB Standard 2-Layer Process  
-> **Measurement System:** **Strictly Metric (SI: mm / µm)**  
+> **Status:** Schematics & PCB Layout Initialized (KiCad 9 PCB Created)
+> **Last Updated:** 2026-11-22
+> **Target CAD Tool:** KiCad 9 on Debian Linux 13 (amd64)
+> **Project File:** `/home/lynchaj/Documents/edu_sbc/edu_sbc.kicad_pro`
+> **Root Schematic:** `/home/lynchaj/Documents/edu_sbc/edu_sbc.kicad_sch`
+> **PCB Layout:** `/home/lynchaj/Documents/edu_sbc/edu_sbc.kicad_pcb`
+> **Bill of Materials:** `/home/lynchaj/Documents/edu_sbc/BOM.md` (and `BOM.csv`)
+> **Autorouter:** FreeRouting 2.5.0 (Specctra DSN / SES workflow)
+> **PCB Fabricator:** JLCPCB Standard 2-Layer Process
+> **Measurement System:** **Strictly Metric (SI: mm / µm)**
 > **Workspace Directory:** `/home/lynchaj/Documents/edu_sbc`
 
 ---
@@ -17,7 +17,7 @@
 ## 1. Project Vision & Purpose
 - **Core Mission:** An open, observable Single Board Computer designed explicitly to teach **computer fundamentals, digital logic, and microarchitecture** to vocational and engineering students.
 - **Application:** Basic embedded controller with CPU, RAM, ROM, parallel GPIO, and dual serial console interfaces.
-- **Pedagogical Progression:** 
+- **Pedagogical Progression:**
   - **Phase 1 (Beginner):** Strictly polling-based I/O routines.
   - **Phase 2 (Advanced Microarchitecture):** Hardware interrupt service routines (Z80 Mode 1 / Mode 2) enabled via a dedicated jumper.
 - **Assembly Philosophy:** Modular, progressive assembly. Students build and verify the computer one subsystem at a time across multiple laboratory sessions.
@@ -361,3 +361,11 @@ Students build and verify the computer across 6 structured lab sessions:
   - Resolved all 9 ERC violations in `01_Power_Clock.kicad_sch`: removed dangling unconnected wire stubs and isolated internal power labels.
   - Retained all primary global labels (`+5V`, `GND`, `nRESET`, `RESET_HIGH`, `UART_INTR`, `nUART_INT`, `CPU_CLK`, `UART_CLK`) and architectural notes.
   - Re-ran KiCad 9 ERC check across the full hierarchical schematic: verified 0 errors, 0 warnings.
+- **2026-11-22 (KiCad 9 Schematic Syntax Fixes, 06_Parallel_IO Sheet & v4 Bundle):**
+  - Diagnosed KiCad 9 schematic load errors in `edu_sbc_schematics.zip`: literal newline characters inside double-quoted `(text "...")` blocks in `edu_sbc.kicad_sch` (lines 195–196) and `01_Power_Clock.kicad_sch` (lines 3380–3383), and invalid `(shape power_in)` / `(shape power_out)` tokens on `(global_label ...)` elements across sub-sheets (which only accept `input`, `output`, `bidirectional`, `tri_state`, or `passive`).
+  - Patched quoted multi-line strings to escaped `\n` sequences and normalized `(global_label ...)` shapes across the schematics while preserving symbol pins, wires, and layout alignment.
+  - Added the missing Parallel I/O schematic `06_Parallel_IO.kicad_sch` (`U9` `CP82C55A-5Z` DIP-40, `C15` 100nF bypass capacitor, `J2` 26-pin horizontal box header with odd/even `PA0`–`PA7` / `PB0`–`PB7` interleaving, `PC0`–`PC7`, `GND`, and `GPIO_PWR_SELECT`, `JP3` 1x3 power jumper, and `PWR_FLAG` symbols on `+5V` and `GND`) and registered it as a hierarchical sheet in `edu_sbc.kicad_sch` clear of the A3 title block.
+  - Documented external accessories (`Qualtek QAWA-24-12-US01`, `DTECH DT-9008`, `DTECH DT-5002A`) as schematic/PCB notes rather than BOM schematic symbols, and packaged the 7-file schematic set into `edu_sbc_schematics-v4.zip`.
+- **2026-11-22 (PCB Layout Load Error Fix in `edu_sbc.kicad_pcb`):**
+  - Diagnosed KiCad 9 PCB load error (`Expecting '(' in .../edu_sbc.kicad_pcb, line 236, offset 2`) caused by unsupported `;;` comment lines in `.kicad_pcb` S-expression syntax.
+  - Removed the `;;` comment lines in `edu_sbc.kicad_pcb` and updated `TO_DO.md` to mark PCB layout load errors resolved.
