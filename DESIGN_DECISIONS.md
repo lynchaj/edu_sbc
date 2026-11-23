@@ -1,33 +1,36 @@
 # Educational Single Board Computer (EduSBC) — Project Decisions & Specifications Record
 
-> **Status:** Schematics & PCB Layout Initialized (KiCad 9 PCB Created)
-> **Last Updated:** 2026-11-22
-> **Target CAD Tool:** KiCad 9 on Debian Linux 13 (amd64)
-> **Project File:** `/home/lynchaj/Documents/edu_sbc/edu_sbc.kicad_pro`
-> **Root Schematic:** `/home/lynchaj/Documents/edu_sbc/edu_sbc.kicad_sch`
-> **PCB Layout:** `/home/lynchaj/Documents/edu_sbc/edu_sbc.kicad_pcb`
-> **Bill of Materials:** `/home/lynchaj/Documents/edu_sbc/BOM.md` (and `BOM.csv`)
-> **Autorouter:** FreeRouting 2.5.0 (Specctra DSN / SES workflow)
-> **PCB Fabricator:** JLCPCB Standard 2-Layer Process
-> **Measurement System:** **Strictly Metric (SI: mm / µm)**
+> **Overview & Quick Specs:** See [`README.md`](README.md) for project background, hardware summary, and repository layout.  
+> **Last Updated:** 2026-11-22  
+> **Target CAD Tool:** KiCad 9 on Debian Linux 13 (amd64)  
+> **Autorouter:** FreeRouting 2.5.0 (Specctra DSN / SES workflow)  
+> **PCB Fabricator:** JLCPCB Standard 2-Layer Process  
+> **Measurement System:** **Strictly Metric (SI: mm / µm)**  
 > **Workspace Directory:** `/home/lynchaj/Documents/edu_sbc`
 
 ---
 
-## 1. Project Vision & Purpose
-- **Core Mission:** An open, observable Single Board Computer designed explicitly to teach **computer fundamentals, digital logic, and microarchitecture** to vocational and engineering students.
-- **Application:** Basic embedded controller with CPU, RAM, ROM, parallel GPIO, and dual serial console interfaces.
-- **Pedagogical Progression:**
-  - **Phase 1 (Beginner):** Strictly polling-based I/O routines.
-  - **Phase 2 (Advanced Microarchitecture):** Hardware interrupt service routines (Z80 Mode 1 / Mode 2) enabled via a dedicated jumper.
-- **Assembly Philosophy:** Modular, progressive assembly. Students build and verify the computer one subsystem at a time across multiple laboratory sessions.
-- **Target Student Profile:** Absolute beginner; assume no prior soldering, digital logic, or assembly programming experience.
+## 1. Project Constraints & Governance Policies
 - **Measurement Standard:** **100% Metric (SI)**. All PCB dimensions, trace widths, clearances, component pitches, drill sizes, keep-outs, and grid coordinates are strictly specified in millimeters (mm) or micrometers (µm).
 - **File & Data Retention Policy:** All project files, schematics, PCB layouts, libraries, documentation, and downloaded datasheets must strictly reside locally on the user's PC in `/home/lynchaj/Documents/edu_sbc`.
 
 ---
 
 ## 2. System Architecture & Hardware Specifications
+
+### 2.0 Hierarchical Schematic Organization
+The KiCad 9 schematic (`edu_sbc.kicad_sch`, Root UUID `00000000-0000-0000-0000-000065000001`, A3) organizes the design into **6 subsystem sheets** (`01_` through `06_`) plus top-level M3 mounting holes (`H1`–`H4`):
+
+| Sheet Name | Schematic File | UUID | Subsystem Scope |
+| :--- | :--- | :--- | :--- |
+| `01_Power_Clock` | `01_Power_Clock.kicad_sch` | `00000000-0000-0000-0000-000065010000` | Power input, 7805 regulation, reset supervisor/inverter, dual oscillators, clock/power test points |
+| `02_CPU_Z80` | `02_CPU_Z80.kicad_sch` | `00000000-0000-0000-0000-000065020000` | Z80 CPU core, bus pull-up network, address/data/control bus breakouts, bus test points |
+| `03_Address_Decode` | `03_Address_Decode.kicad_sch` | `00000000-0000-0000-0000-000065030000` | Memory and I/O address decoding (`74HCT139` / `74HCT138` gated by `/MREQ`, `/IORQ`, `/M1`) |
+| `04_Memory` | `04_Memory.kicad_sch` | `00000000-0000-0000-0000-000065040000` | 32 KB EEPROM/EPROM (`AT28C256` / 28-pin universal socket with mode/WP jumpers) & 32 KB SRAM (`AS6C62256`) |
+| `05_Serial_UART` | `05_Serial_UART.kicad_sch` | `00000000-0000-0000-0000-000065050000` | `TL16C550CN` UART, `MAX232CPE+` RS-232 transceiver, DB9 (`J3`), TTL/expansion headers, contention isolation, interrupt routing |
+| `06_Parallel_IO` | `06_Parallel_IO.kicad_sch` | `00000000-0000-0000-0000-000065060000` | `CP82C55A-5Z` PPI (`U9`), `C15` decoupling, 26-pin horizontal box header (`J2`), `JP3` (`JP_GPIO_PWR`) power selector |
+
+*(External cables and wall adapters such as `Qualtek QAWA-24-12-US01`, `DTECH DT-9008`, and `DTECH DT-5002A` are documented as schematic/PCB notes rather than BOM schematic symbols.)*
 
 ### 2.1 Central Processing Unit (CPU)
 - **Processor:** Z80 CPU (CMOS Z84C00 preferred, 40-pin DIP, socketed, 2.54 mm pin pitch, 15.24 mm row spacing).
@@ -72,25 +75,25 @@
       - **Pins 1–2 (Write-Protect):** Ties $\overline{WE}$ (Pin 27) HIGH to $+5\text{V}$ (hardware write lock).
       - **Pins 2–3 (Write-Enable):** Connects $\overline{WE}$ (Pin 27) to Z80 $\overline{WR}$ strobe for in-circuit flashing.
 
-### 2.4 Parallel I/O Subsystem
-- **IC:** 82C55 / 8255 Programmable Peripheral Interface (PPI) (40-pin DIP, socketed, 2.54 mm pitch, 15.24 mm row spacing).
+### 2.4 Parallel I/O Subsystem (`06_Parallel_IO.kicad_sch`)
+- **IC:** 82C55 / 8255 Programmable Peripheral Interface (PPI) (`U9`: `CP82C55A-5Z`, 40-pin DIP, socketed, 2.54 mm pitch, 15.24 mm row spacing, with `C15` 100nF ceramic decoupling capacitor).
 - **I/O Port Address Allocation:**
   - Base address: `$00 – $03` (Port A, Port B, Port C, Control Register).
   - Decoded via **74HCT138** (socketed) qualified by `/IORQ` and `/M1` (ignoring interrupt acknowledge cycles).
-- **Reset Inversion:** 8255 requires active-HIGH reset; driven via inverted `/RESET` from 74HCT14 Schmitt trigger inverter.
-- **External GPIO Connector:**
-  - Form factor: **26-pin (13×2 / 2×13) horizontal / right-angle 2.54 mm pitch shrouded box header** pointing outward over the PCB edge.
+- **Reset Inversion:** 8255 requires active-HIGH reset; driven via inverted `/RESET` (`RESET_HIGH`) from 74HCT14 Schmitt trigger inverter.
+- **External GPIO Connector (`J2`):**
+  - Form factor: **26-pin (13×2 / 2×13) horizontal / right-angle 2.54 mm pitch shrouded box header** (`Connector_IDC:IDC-Header_2x13_P2.54mm_Horizontal`) pointing outward over the PCB edge.
   - **Exact Pinout Map (Odd / Even Interleaved):**
     - **Odd Pins 1, 3, 5, 7, 9, 11, 13, 15:** Port A (PA0, PA1, PA2, PA3, PA4, PA5, PA6, PA7)
     - **Even Pins 2, 4, 6, 8, 10, 12, 14, 16:** Port B (PB0, PB1, PB2, PB3, PB4, PB5, PB6, PB7)
     - **Pins 17 – 24:** Port C (17: PC0, 18: PC1, 19: PC2, 20: PC3, 21: PC4, 22: PC5, 23: PC6, 24: PC7)
     - **Pin 25:** Dedicated Ground (`GND`)
-    - **Pin 26:** Selectable Power/Ground via 3-pin jumper (`JP_GPIO_PWR`, 2.54 mm pitch):
+    - **Pin 26:** Selectable Power/Ground (`GPIO_PWR_SELECT`) via 3-pin jumper (`JP3` / `JP_GPIO_PWR`, 2.54 mm pitch):
       - Pins 1–2 (Default): **VCC (+5V)** delivered to Pin 26.
       - Pins 2–3: **Ground (GND)** delivered to Pin 26.
 
-### 2.5 Serial Communications & Hardware Handshaking
-- **IC:** 16C550 / 16550 UART with FIFO (40-pin DIP, socketed, 2.54 mm pitch, 15.24 mm row spacing).
+### 2.5 Serial Communications & Hardware Handshaking (`05_Serial_UART.kicad_sch`)
+- **IC:** 16C550 / 16550 UART with FIFO (`U10`: `TL16C550CN`, 40-pin DIP, socketed, 2.54 mm pitch, 15.24 mm row spacing).
 - **Interrupt Output Inversion:**
   - 16550 active-high `INTR` (Pin 30) is inverted via a spare 74HCT14 inverter to generate active-low `/UART_INT`.
   - Routed to Pin 1 of `JP_INT` (Z80 `/INT` connection).
@@ -101,7 +104,7 @@
 - **Baud Rate Clock:** Dedicated **1.8432 MHz** canned TTL crystal oscillator (socketed, standard DIP-8 or DIP-14 footprint, 2.54 mm pitch) feeding `RCLK` and `BAUDOUT` for 0% baud rate error from 9600 to 115200 bps.
 - **Reset Inversion:** 16550 requires active-HIGH reset; driven in parallel with 8255 from inverted `/RESET`.
 - **Dual Physical Interfaces (Exclusive Operational Policy):**
-  1. **RS-232 Port:** Standard **DE-9 (DB9) Male right-angle connector with DTE pinout** driven by onboard MAX232 transceiver (socketed DIP-16) with four 0.1µF charge pump capacitors.
+  1. **RS-232 Port (`J3`):** Standard **DE-9 (DB9) Male right-angle connector with DTE pinout** driven by onboard MAX232 transceiver (`U11`: `MAX232CPE+`, socketed DIP-16) with charge pump capacitors (`C20`–`C23`).
      - **Supported Handshake Signals (5-wire connection):**
        - Pin 2: `RXD` (Data from host PC)
        - Pin 3: `TXD` (Data to host PC)
@@ -119,7 +122,7 @@
        - **Pin 6 (RTS):** Received from DTECH Pin 6 (Green, RTS out of PC) $\rightarrow$ 16C550 `/CTS` (Pin 36)
      - Fully compatible with DTECH 6ft FT232RL cables available on Amazon and eBay.
 - **Exclusive Operational Mandate & Silkscreen Warning:**
-  - **The schematic and PCB silkscreen must prominently state that the operator can connect either TTL Serial (J4) OR DE-9 RS-232 (J3), but NEVER both at once.**
+  - **The schematic and PCB silkscreen must prominently state that the operator can connect either TTL Serial OR DE-9 RS-232, but NEVER both at once.**
   - Silkscreen text on `F.Silk` adjacent to the serial connectors: `CONNECT EITHER TTL (J4) OR RS-232 (J3) - NOT BOTH`.
 - **Contention Prevention Isolation:**
   - Series isolation resistors (1kΩ) placed between the MAX232 receiver outputs (`R1OUT` / `R2OUT`) and the 16550 `SIN` (RX) / `CTS` handshake lines to prevent driver damage if an operator accidentally plugs in both cables.
@@ -325,11 +328,10 @@ Students build and verify the computer across 6 structured lab sessions:
 - **2026-11-19 (Session 1 - KiCad 9 Project Creation):**
   - Generated `edu_sbc.kicad_pro` with metric design rules, JLCPCB 2-layer constraints, FreeRouting DSN export configuration, and Net Classes (`Default`: 0.100 mm / `Signal`: 0.100 mm / `Power`: 0.300 mm, clearance 0.127 mm, via 0.800/0.400 mm).
 - **2026-11-19 (Session 1 - Complete Schematic Capture):**
-  - Created root schematic `edu_sbc.kicad_sch` with hierarchical architecture linking 5 distinct subsystem sheets matching the 6 lab sessions.
+  - Created root schematic `edu_sbc.kicad_sch` with hierarchical architecture linking subsystem sheets (`01_Power_Clock`, `02_CPU_Z80`, `03_Address_Decode`, `04_Memory`, `05_Serial_UART`, and subsequently `06_Parallel_IO`).
   - Implemented `01_Power_Clock.kicad_sch` (Barrel jack, reverse diode, bulk/bypass caps, 7805 regulator with heatsink, 3mm green LED, DS1813-5+ reset supervisor, 74HCT14 inverter, dual 4MHz/1.8432MHz TTL canned oscillators, test point loops TP1-TP6).
-  - Implemented `02_CPU_Bus.kicad_sch` (Z80 CMOS CPU, SIP-6 10k resistor network pull-up, full address A0-A15 and data D0-D7 bus breakouts, test point loops TP7-TP13).
-  - Implemented `03_Memory_Decode.kicad_sch` (74HCT139 memory decoder, 74HCT138 I/O decoder with /IORQ and /M1 gating, 28-pin universal ROM socket with JP_ROM_TYPE and JP_ROM_WP jumpers, 62256 32KB SRAM).
-  - Implemented `04_Parallel_IO.kicad_sch` (82C55 PPI, 26-pin 13x2 horizontal box header with odd/even interleaved pinout, JP_GPIO_PWR jumper).
+  - Implemented `02_CPU_Z80.kicad_sch` (Z80 CMOS CPU, SIP-6 10k resistor network pull-up, full address A0-A15 and data D0-D7 bus breakouts, test point loops TP7-TP13).
+  - Implemented `03_Address_Decode.kicad_sch` and `04_Memory.kicad_sch` (74HCT139/138 address decoding with /MREQ, /IORQ, and /M1 gating; 28-pin universal ROM socket with JP_ROM_TYPE and JP_ROM_WP jumpers; 62256 32KB SRAM).
   - Implemented `05_Serial_UART.kicad_sch` (16C550 UART, MAX232, 5-wire DE-9 male connector with RTS/CTS, 6-pin TTL serial header, 1k contention isolation resistors, JP_INT interrupt jumper).
   - Enforced 100% net labeling, zero symbol/text overlap, and strict metric pin pitches across all sheets.
 - **2026-11-19 (Session 1 - Hardware Ecosystem Alignment: DTECH Cable & QAWA Adapter):**
@@ -364,8 +366,10 @@ Students build and verify the computer across 6 structured lab sessions:
 - **2026-11-22 (KiCad 9 Schematic Syntax Fixes, 06_Parallel_IO Sheet & v4 Bundle):**
   - Diagnosed KiCad 9 schematic load errors in `edu_sbc_schematics.zip`: literal newline characters inside double-quoted `(text "...")` blocks in `edu_sbc.kicad_sch` (lines 195–196) and `01_Power_Clock.kicad_sch` (lines 3380–3383), and invalid `(shape power_in)` / `(shape power_out)` tokens on `(global_label ...)` elements across sub-sheets (which only accept `input`, `output`, `bidirectional`, `tri_state`, or `passive`).
   - Patched quoted multi-line strings to escaped `\n` sequences and normalized `(global_label ...)` shapes across the schematics while preserving symbol pins, wires, and layout alignment.
-  - Added the missing Parallel I/O schematic `06_Parallel_IO.kicad_sch` (`U9` `CP82C55A-5Z` DIP-40, `C15` 100nF bypass capacitor, `J2` 26-pin horizontal box header with odd/even `PA0`–`PA7` / `PB0`–`PB7` interleaving, `PC0`–`PC7`, `GND`, and `GPIO_PWR_SELECT`, `JP3` 1x3 power jumper, and `PWR_FLAG` symbols on `+5V` and `GND`) and registered it as a hierarchical sheet in `edu_sbc.kicad_sch` clear of the A3 title block.
+  - Added the missing Parallel I/O schematic `06_Parallel_IO.kicad_sch` (`U9` `CP82C55A-5Z` DIP-40, `C15` 100nF bypass capacitor, `J2` 26-pin horizontal box header with odd/even `PA0`–`PA7` / `PB0`–`PB7` interleaving, `PC0`–`PC7`, `GND`, and `GPIO_PWR_SELECT`, `JP3` 1x3 power jumper, and `PWR_FLAG` symbols on `+5V` and `GND`) and registered it as a hierarchical sheet in `edu_sbc.kicad_sch` (`00000000-0000-0000-0000-000065060000`) clear of the A3 title block.
   - Documented external accessories (`Qualtek QAWA-24-12-US01`, `DTECH DT-9008`, `DTECH DT-5002A`) as schematic/PCB notes rather than BOM schematic symbols, and packaged the 7-file schematic set into `edu_sbc_schematics-v4.zip`.
 - **2026-11-22 (PCB Layout Load Error Fix in `edu_sbc.kicad_pcb`):**
   - Diagnosed KiCad 9 PCB load error (`Expecting '(' in .../edu_sbc.kicad_pcb, line 236, offset 2`) caused by unsupported `;;` comment lines in `.kicad_pcb` S-expression syntax.
   - Removed the `;;` comment lines in `edu_sbc.kicad_pcb` and updated `TO_DO.md` to mark PCB layout load errors resolved.
+- **2026-11-22 (Schematic Hierarchy Alignment in `DESIGN_DECISIONS.md`):**
+  - Updated `DESIGN_DECISIONS.md` to explicitly document the current 6-sheet hierarchical structure (`01_Power_Clock`, `02_CPU_Z80`, `03_Address_Decode`, `04_Memory`, `05_Serial_UART`, `06_Parallel_IO`) registered in `edu_sbc.kicad_pro` and `edu_sbc.kicad_sch`, including the `06_Parallel_IO.kicad_sch` (`U9` `CP82C55A-5Z`, `J2`, `JP3`, `C15`) and `05_Serial_UART.kicad_sch` (`U10` `TL16C550CN`, `U11` `MAX232CPE+`, `J3`, `J4`, `JP3`/`JP4`) details.

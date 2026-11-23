@@ -1,0 +1,12 @@
+Error: Duplicate items #FLG01
+
+Error: Duplicate items #FLG02
+
+Error: Duplicate items C15
+
+Error: Duplicate items J2
+
+Error: Duplicate items JP3
+
+Error: Duplicate items U9
+
